@@ -1,4 +1,4 @@
-function [Ab] = aiNet(ts,f,N,Nc,beta,gen, vmin, vmax)
+function [Ab, resultado] = aiNet(ts,f,N,Nc,beta,gen, vmin, vmax)
 %   Internal functions: CLONE, SUPPRESS, NORMA
 % Ab     -> matrix of memory cells
 % ts    -> suppression threshold
@@ -27,13 +27,20 @@ function [Ab] = aiNet(ts,f,N,Nc,beta,gen, vmin, vmax)
    %fit = eval(f);
    fit = f(Ab);
    
-   it = 0; 
+   it = 1; 
    Nold = N + 1; 
    Nsup = N;
    
    avfitold = mean(fit); 
    avfit = avfitold-1;
-
+   
+   [~, I] = max(fit);
+   
+   resultado.totalIt = gen;
+   resultado.pop_it = {Ab};
+   resultado.x_it(it,:) = Ab(I,:);
+   resultado.x = Ab(I,:);
+   
 % Main Loop
    while it < gen,
       [Ab] = clone_mut_select(Ab,Nc,beta,norma(fit),xmin,xmax,ymin,ymax,f);
@@ -53,7 +60,10 @@ function [Ab] = aiNet(ts,f,N,Nc,beta,gen, vmin, vmax)
       fit = f(Ab);
       avfitold = avfit; 
       avfit = mean(fit);
-      it = it + 1; 
+      it = it + 1;
+       
+      resultado = storeInfo(Ab, resultado, fit, f, it);
+      
    end;
 
 end

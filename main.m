@@ -11,5 +11,9 @@ N = 100;
 Nc = 100;
 beta = 0.5;
 
-[Ab] = aiNet(ts,f,N,Nc,beta,gen, vmin, vmax)
+options.limites = [-10 10];
+
+[Ab, resultado] = aiNet(ts,f,N,Nc,beta,gen, vmin, vmax)
+
+plotaResultadoAiNet(resultado, f, options);
 
