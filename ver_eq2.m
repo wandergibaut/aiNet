@@ -1,4 +1,4 @@
-function [Is] = ver_eq2(I); 
+function [Is] = ver_eq2(I)
 l = length(I); 
 Is = []; 
 if l > 1, 
@@ -13,4 +13,5 @@ if l > 1,
    Is = [Is,I(end)]; 
 else, 
    Is = I; 
-end; 
+end
+end

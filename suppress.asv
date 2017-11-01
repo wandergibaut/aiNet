@@ -17,15 +17,8 @@ function [Ab] = suppress(Ab,ts,f)
             Iaux = [Iaux Is(i)]; 
         end
     end
-    Ab = extract(Ab,Iaux);
-    fit = f(Ab);
-    D1 = dist(Ab); 
-	aux = triu(D1,1); 
     [Is,Js] = find(aux>0 & aux<ts);
-    Iaux = [];
     end
-    
-     
 % 	if ~isempty(Is), 
 %    		Is = ver_eq3(Is); 
 %    		Ab = extract(Ab,Is); 

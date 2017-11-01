@@ -9,4 +9,4 @@ function[Dn] = norma(D);
 			Dn(:,i) = (D(:,i) - vminD(i))./(vmaxD(i)-vminD(i)); 
    		end; 
 	end; 
-end;
+end

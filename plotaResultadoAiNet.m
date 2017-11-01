@@ -1,4 +1,4 @@
-function []=plotaResultadoPSO_v2(resultado,fun,options)
+function []=plotaResultadoAiNet(resultado,fun,options)
 % Entradas da Funï¿½ï¿½o:
 %   resultado: estrutura contendo os resultados
 %           resultado.totalIt: # total de iteraï¿½ï¿½es
@@ -52,8 +52,8 @@ colormap(parula)
 colorbar
 axis([-10 10 -10 10])
 pbaspect([1 1 1])
-xticks([-10 -8 -6 -4 -2 0 1 2 4 6 8 10])
-yticks([-10 -8 -6 -4 -2 0 1 2 4 6 8 10])
+%xticks([-10 -8 -6 -4 -2 0 1 2 4 6 8 10])
+%yticks([-10 -8 -6 -4 -2 0 1 2 4 6 8 10])
 grid
 % savefig(Figura,['funcao2d.fig']);
 
@@ -81,7 +81,7 @@ plot(x1,x2,'.','color',[0 0 0]);
 part2d=plot(x1,x2,'.','color',[0.8 0 0]);
 melhor2d=plot(X1,X2,'*','color',[1 0 0]);
 
-title(['Iteraï¿½ï¿½o: 1']);
+title(['Iteração: 1']);
 
 subplot(figura3d)
 for j=1:max(size(x1))
@@ -91,11 +91,11 @@ F=fun([X1,X2]);
 plot3(x1,x2,f,'.','color',[0 0 0]);
 part3d=plot3(x1,x2,f,'.','color',[0.8 0 0]);
 melhor3d=plot3(X1,X2,F,'*','color',[1 0 0]);
-title(['Iteraï¿½ï¿½o: 1']);
+title(['Iteração: 1']);
 
 pause(0.1)    
 %modificar
-for i=1size(pop_it)
+for i=2:size(pop_it,2)
 %for i=2:size(ind,2)
 
 %    x1=pop_it{ind(i)}(:,1);
@@ -117,9 +117,9 @@ for i=1size(pop_it)
     set(part3d,'XData',x1,'YData',x2,'ZData',f);
     set(melhor3d,'XData',X1,'YData',X2,'ZData',F);
     subplot(figura2d)
-    title(['Iteraï¿½ï¿½o: ',num2str(i)]);
+    title(['Iteração: ',num2str(i)]);
     subplot(figura3d)
-    title(['Iteraï¿½ï¿½o: ',num2str(i)]);
+    title(['Iteração: ',num2str(i)]);
     pause(0.1)
 
 
