@@ -7,3 +7,6 @@ Since I did't find any Matlab code of the specified algorithm, I'm post one here
 The main.m file contains especifications of parameters (including the function to maximize) and a call of the aiNet function with those definitions.
 
 It passed some tests, but it not necessarily flawless.
+
+
+![My image](wandergibaut.github.com/aiNet/funfando.png)
