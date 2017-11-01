@@ -9,4 +9,4 @@ The main.m file contains especifications of parameters (including the function t
 It passed some tests, but it not necessarily flawless.
 
 
-![My image](wandergibaut.github.com/aiNet/funfando.png)
+![alt text](https://github.com/wandergibaut/aiNet/blob/master/funfando.png "Schaffer function solution via aiNet  in 50 iterations")
