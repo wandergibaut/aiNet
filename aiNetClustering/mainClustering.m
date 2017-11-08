@@ -10,7 +10,7 @@ r = 1;
 
 %ts = 0.04; 
 ts = r;
-gen = 50;
+gen = 20;
 vmin = 0;
 vmax = 30;
 N = 10;
@@ -22,14 +22,14 @@ load('d31.mat');
 %alterado
 options.limites = [0 30];
 
-for i=1:10
+%for i=1:10
     [Ab, resultado] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, dados);
-    plotaResultadoAiNet(resultado, f, options);
+    plotaResultadoAiNet(resultado, options);
     
     name = strcat('aiNet_runX_',int2str(i),'.mat');
     save(name,'resultado');
     
-end
+%end
 
 %[Ab, resultado] = aiNet(ts,f,N,Nc,beta,gen, vmin, vmax);
 %plotaResultadoAiNet(resultado, f, options);

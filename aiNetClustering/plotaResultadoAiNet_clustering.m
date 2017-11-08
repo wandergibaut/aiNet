@@ -1,4 +1,4 @@
-function []=plotaResultadoAiNet(resultado,fun,options)
+function []=plotaResultadoAiNet(resultado,options)
 % Entradas da Fun��o:
 %   resultado: estrutura contendo os resultados
 %           resultado.totalIt: # total de itera��es
@@ -23,11 +23,11 @@ function []=plotaResultadoAiNet(resultado,fun,options)
 maxIt=resultado.totalIt;
 lim=options.limites;
 
-x=linspace(lim(1),lim(2),200);
-y=linspace(lim(1),lim(2),200);
-[X,Y] = meshgrid(x,y);
+%x=linspace(lim(1),lim(2),200);
+%y=linspace(lim(1),lim(2),200);
+%[X,Y] = meshgrid(x,y);
 
-a= [x; y];
+%fa= [x; y];
 %for i=1:200
 %    for j=1:200
 %        a=[x(i) y(j)];
@@ -37,26 +37,26 @@ a= [x; y];
 
 figura=figure('Position', [900    300    1000    400]);
 
-figura3d=subplot(1,2,1);
-superficie=surf(x,y,a,'EdgeColor','none');
+%figura3d=subplot(1,2,1);
+%superficie=surf(x,y,a,'EdgeColor','none');
 %superficie=surf(x,y,F,'EdgeColor','none');
-alpha(superficie,0.3)
-hold
-colormap(parula)
+%alpha(superficie,0.3)
+%hold
+%colormap(parula)
 % savefig(Figura,['funcao3d.fig']);
 
 
-figura2d=subplot(1,2,2);
+%figura2d=subplot(1,2,2);
 
-contourf(x,y,a,50,'EdgeColor','none')
-hold
-colormap(parula)
-colorbar
-axis([-10 10 -10 10])
-pbaspect([1 1 1])
+%contourf(x,y,a,50,'EdgeColor','none')
+%hold
+%colormap(parula)
+%colorbar
+axis([0 30 0 30])
+%fpbaspect([1 1 1])
 %xticks([-10 -8 -6 -4 -2 0 1 2 4 6 8 10])
 %yticks([-10 -8 -6 -4 -2 0 1 2 4 6 8 10])
-grid
+%grid
 % savefig(Figura,['funcao2d.fig']);
 
 
@@ -78,22 +78,22 @@ x2=pop_it{1}(:,2);
 
 X1=x_it(1,1); X2=x_it(1,2);
 
-subplot(figura2d)
+%subplot(figura2d)
 plot(x1,x2,'.','color',[0 0 0]);
 part2d=plot(x1,x2,'.','color',[0.8 0 0]);
 melhor2d=plot(X1,X2,'*','color',[1 0 0]);
 
 title(['Itera��o: 1']);
 
-subplot(figura3d)
-for j=1:max(size(x1))
-    f(j)=fun([x1(j),x2(j)]);
-end
-F=fun([X1,X2]);
-plot3(x1,x2,f,'.','color',[0 0 0]);
-part3d=plot3(x1,x2,f,'.','color',[0.8 0 0]);
-melhor3d=plot3(X1,X2,F,'*','color',[1 0 0]);
-title(['Itera��o: 1']);
+%subplot(figura3d)
+%for j=1:max(size(x1))
+%    f(j)=fun([x1(j),x2(j)]);
+%end
+%F=fun([X1,X2]);
+%plot3(x1,x2,f,'.','color',[0 0 0]);
+%part3d=plot3(x1,x2,f,'.','color',[0.8 0 0]);
+%melhor3d=plot3(X1,X2,F,'*','color',[1 0 0]);
+%title(['Itera��o: 1']);
 
 pause(0.1)    
 %modificar
@@ -108,30 +108,30 @@ for i=2:size(pop_it,2)
 
     X1=x_it(i,1); X2=x_it(i,2);
 
-    for j=1:max(size(x1))
-        f(j)=fun([x1(j),x2(j)]);
-    end
+%    for j=1:max(size(x1))
+%        f(j)=fun([x1(j),x2(j)]);
+%    end
 
-    F=fun([X1,X2]);
+%    F=fun([X1,X2]);
 
     set(part2d,'XData',x1,'YData',x2);
     set(melhor2d,'XData',X1,'YData',X2);
-    set(part3d,'XData',x1,'YData',x2,'ZData',f);
-    set(melhor3d,'XData',X1,'YData',X2,'ZData',F);
-    subplot(figura2d)
+%    set(part3d,'XData',x1,'YData',x2,'ZData',f);
+%    set(melhor3d,'XData',X1,'YData',X2,'ZData',F);
+%    subplot(figura2d)
     title(['Itera��o: ',num2str(i)]);
-    subplot(figura3d)
-    title(['Itera��o: ',num2str(i)]);
+%    subplot(figura3d)
+%    title(['Itera��o: ',num2str(i)]);
     pause(0.1)
 
 
 end
 
-subplot(figura2d)
+%subplot(figura2d)
 x_sol=resultado.x;
 plot(x_sol(1),x_sol(2),'r*')
 
-subplot(figura3d)
-plot3(x_sol(1),x_sol(2),fun([x_sol(1),x_sol(2)]),'r*')
+%subplot(figura3d)
+%plot3(x_sol(1),x_sol(2),fun([x_sol(1),x_sol(2)]),'r*')
     
 
