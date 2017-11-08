@@ -1,4 +1,4 @@
-function [Ab, resultado] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
+function [Ab, resultado, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
 %   Internal functions: CLONE, SUPPRESS, NORMA
 % Ab     -> matrix of memory cells
 % ts    -> suppression threshold
@@ -49,9 +49,9 @@ function [Ab, resultado] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
       [Ab] = clone_mut_select_clustering(Ab,Nc,beta,norma(fit),xmin,xmax,ymin,ymax,f, DATA, ts);
 % Immune Network Interactions After a Number of Iterations
       if rem(it,5) == 0,
-         if abs(1-avfitold/avfit) < .001,
+%         if abs(1-avfitold/avfit) < .001,
             [Ab] = suppress(Ab,ts,f);
-         end;
+%         end;
       end;
 % Insert randomly generated individuals
       d = round(.4*N);
@@ -69,5 +69,8 @@ function [Ab, resultado] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
       resultado = storeInfo_clustering(Ab, resultado, fit, f, it, DATA, ts);
       
    end;
-
+   Ab = kill(Ab,fit);
+   D = dist(Ab);
+   fit = calcFitness(Ab, DATA, f, ts);
+   resultado = storeInfo_clustering(Ab, resultado, fit, f, it+1, DATA, ts);
 end

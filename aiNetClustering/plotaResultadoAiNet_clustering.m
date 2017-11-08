@@ -1,4 +1,4 @@
-function []=plotaResultadoAiNet(resultado,options)
+function []=plotaResultadoAiNet_clustering(resultado,options)
 % Entradas da Fun��o:
 %   resultado: estrutura contendo os resultados
 %           resultado.totalIt: # total de itera��es

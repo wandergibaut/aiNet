@@ -9,11 +9,11 @@ f = @(V) 1/(sum(sqrt((V(:,1) - V(:,3)).^2 + (V(:,2) - V(:,4)).^2)));
 r = 1;
 
 %ts = 0.04; 
-ts = r;
-gen = 20;
+ts = 0.04;
+gen = 50;
 vmin = 0;
 vmax = 30;
-N = 10;
+N = 100;
 Nc = 10;
 beta = 2;
 
@@ -23,8 +23,8 @@ load('d31.mat');
 options.limites = [0 30];
 
 %for i=1:10
-    [Ab, resultado] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, dados);
-    plotaResultadoAiNet(resultado, options);
+    [Ab, resultado, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, dados);
+    %plotaResultadoAiNet(resultado, options);
     
     name = strcat('aiNet_runX_',int2str(i),'.mat');
     save(name,'resultado');
