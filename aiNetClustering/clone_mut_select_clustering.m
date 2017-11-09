@@ -35,12 +35,13 @@ function [C] = clone_mut_select_clustering(Ab,Nc,beta,fitin,xmin,xmax,ymin,ymax,
     for i=1:size(I,1)
 %       for j=1:size(Cm(:,:,I(i)),1);
         C(i,:) = Cm(i,:,I(i));
+        fitness(i) = fit(i,I(i));
 %       end
     end
     
 % sort
     %fitness = f(C);
-    fitness = calcFitness(C, DATA, f, r)
+    %fitness = calcFitness(C, DATA, f, r)
     [~,fitSort]=sort(fitness); %Get the order of B
     
 %     for i=1:size(fitSort)

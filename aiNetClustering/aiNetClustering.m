@@ -49,9 +49,9 @@ function [Ab, resultado, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DA
       [Ab] = clone_mut_select_clustering(Ab,Nc,beta,norma(fit),xmin,xmax,ymin,ymax,f, DATA, ts);
 % Immune Network Interactions After a Number of Iterations
       if rem(it,5) == 0,
-%         if abs(1-avfitold/avfit) < .001,
-            [Ab] = suppress(Ab,ts,f);
-%         end;
+         if abs(1-avfitold/avfit) < .001,
+            [Ab, fit] = suppress(Ab,ts,f, DATA, fit);
+         end;
       end;
 % Insert randomly generated individuals
       d = round(.4*N);
@@ -61,7 +61,11 @@ function [Ab, resultado, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DA
 % Evaluating Fitness
       %fit = eval(f); 
       %fit = f(Ab);
+      
       fit = calcFitness(Ab, DATA, f, ts);
+      [Ab, fit] = kill(Ab,fit);
+
+      %fit = calcFitness(Ab, DATA, f, ts);
       avfitold = avfit; 
       avfit = mean(fit);
       it = it + 1;
@@ -69,7 +73,8 @@ function [Ab, resultado, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DA
       resultado = storeInfo_clustering(Ab, resultado, fit, f, it, DATA, ts);
       
    end;
-   Ab = kill(Ab,fit);
+   [Ab, fit] = kill(Ab,fit);
+   %[Ab, fit] = suppress(Ab,1,f, DATA, fit);
    D = dist(Ab);
    fit = calcFitness(Ab, DATA, f, ts);
    resultado = storeInfo_clustering(Ab, resultado, fit, f, it+1, DATA, ts);

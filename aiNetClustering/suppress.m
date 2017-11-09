@@ -1,10 +1,11 @@
-function [Ab] = suppress(Ab,ts,f)
+function [Ab, fit] = suppress(Ab,ts,f, DATA, fit)
 % Given that the pairwise distance between any to Ab’s is below ts, stay only with the one with higher fitness
 	
 	% M   -> memory matrix 
 % D1  -> idiotypic affinity matrix 
 	Iaux = [];
-    fit = f(Ab);
+    %fit = calcFitness(Ab, DATA, f, ts)
+    %fit = f(Ab);
     D1 = dist(Ab); 
 	aux = triu(D1,1); 
 	[Is,Js] = find(aux>0 & aux<ts);
@@ -18,7 +19,9 @@ function [Ab] = suppress(Ab,ts,f)
         end
     end
     Ab = extract(Ab,Iaux);
-    fit = f(Ab);
+    fit = extract(fit,Iaux);
+    %fit = f(Ab);
+    %fit = calcFitness(Ab, DATA, f, ts)
     D1 = dist(Ab); 
 	aux = triu(D1,1); 
     [Is,Js] = find(aux>0 & aux<ts);

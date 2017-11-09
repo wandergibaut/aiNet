@@ -9,11 +9,11 @@ f = @(V) 1/(sum(sqrt((V(:,1) - V(:,3)).^2 + (V(:,2) - V(:,4)).^2)));
 r = 1;
 
 %ts = 0.04; 
-ts = 0.04;
-gen = 50;
+ts = 0.001;
+gen = 20;
 vmin = 0;
 vmax = 30;
-N = 100;
+N = 400;
 Nc = 10;
 beta = 2;
 
@@ -25,7 +25,11 @@ options.limites = [0 30];
 %for i=1:10
     [Ab, resultado, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, dados);
     %plotaResultadoAiNet(resultado, options);
-    
+    ARIA_plot(Ab,dados,ones(size(Ab,1),1));
+    E = mst(Ab,D);
+    plot_mst(Ab,E);
+
+
     name = strcat('aiNet_runX_',int2str(i),'.mat');
     save(name,'resultado');
     
