@@ -1,4 +1,4 @@
-function [Ab, fit] = suppress(Ab,ts,f, DATA, fit)
+function [Ab, fit] = suppress(Ab,ts,f, fit)
 % Given that the pairwise distance between any to Ab’s is below ts, stay only with the one with higher fitness
 	
 	% M   -> memory matrix 

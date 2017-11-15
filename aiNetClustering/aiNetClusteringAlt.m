@@ -1,4 +1,4 @@
-function [Ab, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
+function [Ab, D, resultado] = aiNetClusteringAlt(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
 %   Internal functions: CLONE, SUPPRESS, NORMA
 % Ab     -> matrix of memory cells
 % ts    -> suppression threshold
@@ -27,10 +27,10 @@ function [Ab, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
    %fit = eval(f);
 
 %   fit = calcFitness(Ab, DATA, f, ts);
-   [fit, Ab] = calcFitnessAlt(Ab, DATA, f);
+   %[fit, Ab] = calcFitnessAlt(Ab, DATA, f);
 
    %fit = f(Ab);
-   
+   fit = zeros(size(Ab,1),1);
    it = 1; 
    Nold = N + 1; 
    Nsup = N;
@@ -40,47 +40,65 @@ function [Ab, D] = aiNetClustering(ts,f,N,Nc,beta,gen, vmin, vmax, DATA)
    
    %[~, I] = max(fit);
    
-   %resultado.totalIt = gen;
-   %resultado.pop_it = {Ab};
+   resultado.totalIt = gen;
+   resultado.pop_it = {Ab};
    %resultado.x_it(it,:) = Ab(I,:);
    %resultado.x = Ab(I,:);
    
 % Main Loop
    while it < gen,
-      [Ab] = clone_mut_select_clustering(Ab,Nc,beta,norma(fit),xmin,xmax,ymin,ymax,f, DATA, ts);
+      for i=1:size(DATA,1)
+         dist = [];
+         C =[];
+         for j=1:size(Ab,1)
+            dist(j) = euclidian(DATA(i,:),Ab(j,:)); 
+         end
+         [d, J] = min(dist);
+         C = Ab(J,:);
+
+         %fit(J) = f(d);
+         [AbC, fff] = clone_mut_select_clusteringAlt(C,Nc,beta,fit(J),xmin,xmax,ymin,ymax,f, DATA(i,:));
+         Ab = [Ab; AbC];
+
+         fit = [fit; fff];
+      end
 % Immune Network Interactions After a Number of Iterations
       if rem(it,5) == 0,
          if abs(1-avfitold/avfit) < .001,
-            [Ab, fit] = suppress(Ab,ts,f, DATA, fit);
+            [Ab, fit] = suppress(Ab,ts,f, fit);
          end;
       end;
+
+      [Ab, fit] = kill(Ab,fit);
+
 % Insert randomly generated individuals
       d = round(.4*N);
       Ab1 = xmin + rand(d,1).*(xmax - xmin);
       Ab2 = ymin + rand(d,1).*(ymax - ymin);
       Ab = [Ab;Ab1,Ab2];
+      fit = [fit; zeros(size(Ab1,1),1)];
 % Evaluating Fitness
       %fit = eval(f); 
       %fit = f(Ab);
       
       %fit = calcFitness(Ab, DATA, f, ts);
-      [fit, Ab] = calcFitnessAlt(Ab, DATA, f);
+      %[fit, Ab] = calcFitnessAlt(Ab, DATA, f);
 
-      [Ab, fit] = kill(Ab,fit);
+      
 
       %fit = calcFitness(Ab, DATA, f, ts);
       avfitold = avfit; 
       avfit = mean(fit);
       it = it + 1;
        
-      %resultado = storeInfo_clustering(Ab, resultado, fit, f, it, DATA, ts);
-      
+      resultado = storeInfo_clustering(Ab, resultado, it);
+
    end;
    [Ab, fit] = kill(Ab,fit);
    %[Ab, fit] = suppress(Ab,1,f, DATA, fit);
    
-   [fit, Ab] = calcFitnessAlt(Ab, DATA, f);
-   D = dist(Ab);
+   %[fit, Ab] = calcFitnessAlt(Ab, DATA, f);
+   D = disT(Ab);
    %fit = calcFitness(Ab, DATA, f, ts);
-   %resultado = storeInfo_clustering(Ab, resultado, fit, f, it+1, DATA, ts);
+   resultado = storeInfo_clustering(Ab, resultado, it);
 end

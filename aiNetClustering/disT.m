@@ -1,4 +1,4 @@
-function D = dist(A)
+function D = disT(A)
 	D = zeros(size(A,1),size(A,1));
 
 	for i=1:size(A,1)
